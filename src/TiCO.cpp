@@ -22,7 +22,6 @@
 
 #include <Arduino.h>
 #include <EEPROM.h>
-#include <SoftwareSerial.h>
 
 #include "TiCO.h"
 #include "TiCOSettings.h"
@@ -50,10 +49,6 @@ struct Tico {
   unsigned long timerPausedStart = 0;
 
   unsigned long releOnStart = 0;
-
-#ifdef USE_VOICE_CONTROL
-  unsigned long activationWordReceiveTime = 0; // when we received the activation word
-#endif
 
   long timerAdd = 1000;
   byte timerChangeCount = 0;
@@ -264,7 +259,6 @@ struct Tico {
       settings.testStripFStop = PARAM_TESTSTRIP_FSTOP_DEFAULT;
       settings.testStripTimeCalc = PARAM_TESTSTRIP_TIMECALC_DEFAULT;
       settings.testStripPreExpos = PARAM_TESTSTRIP_PREEXPOS_DEFAULT;
-      settings.voiceControl = PARAM_VOICE_DEFAULT;
       settings.magic = TICO_MAGIC_SIGNATURE;
     }
 
@@ -314,8 +308,6 @@ struct Tico {
           settings.afterDevelGoTo = PARAM_AFTER_DEVEL_DEFAULT;
           break;
       }
-
-      settings.voiceControl = settings.voiceControl >= PARAM_VOICE_MIN && settings.voiceControl <= PARAM_VOICE_MIN ? settings.voiceControl : PARAM_VOICE_DEFAULT;
     }
 
     void setRele(uint8_t val, unsigned long millis)

@@ -33,8 +33,6 @@ const int buzzerPin = 12;
 const int displayClkPin = 8; //pins definitions for TM1637 and can be changed to other ports
 const int displayDIOPin = 9;
 const int rele1Pin = 13;
-const int serial2Tx = 11;
-const int serial2Rx = 10;
 
 #define PARAM_TIMER_DEVEL_MIN 1000
 #define PARAM_TIMER_DEVEL_DEFAULT 120000

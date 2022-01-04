@@ -39,11 +39,6 @@ Display
     const int displayClkPin = 8;
     const int displayDIOPin = 9;
 
-Serial Rx/Tx (solo per debug)
-
-    const int serial2Rx = 10;
-    const int serial2Tx = 11;
-
 Buzzer
 
     const int buzzerPin = 12;

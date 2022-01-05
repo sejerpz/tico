@@ -106,18 +106,10 @@ const int rele1Pin = 13;
 #define PARAM_AFTER_DEVEL 10
 #define PARAM_CDOWN 11
 #define PARAM_SOUND 12
-#ifdef USE_VOICE_CONTROL
-#define PARAM_VOICE_CONTROL 13
-#define PARAM_BRIGHTNESS 14
-#define PARAM_STATISTICS 15
-#define PARAM_RESET 16
-#define PARAM_COUNT 17
-#else
 #define PARAM_BRIGHTNESS 13
 #define PARAM_STATISTICS 14
 #define PARAM_RESET 15
 #define PARAM_COUNT 16
-#endif
 
 #define TIMER_MODE_DEFAULT (TimerModes::TestStrips)
 #define TIMER_DEVEL_MODE_DEFAULT (DevelMode::Factorial)

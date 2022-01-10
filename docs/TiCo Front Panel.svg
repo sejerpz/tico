@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="214mm"
+   height="137mm"
+   viewBox="0 0 214 137"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="TiCo Front Panel.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:export-filename="/home/andrea/Devel/src/tico/docs/TiCo Front Panel.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.80000879"
+     inkscape:cx="404.99555"
+     inkscape:cy="356.24609"
+     inkscape:window-width="1680"
+     inkscape:window-height="990"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     units="mm" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect53"
+       width="189.04623"
+       height="93.168159"
+       x="12.104535"
+       y="20.906149" />
+    <circle
+       style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path281"
+       cx="64.703285"
+       cy="89.759071"
+       r="15.650434" />
+    <ellipse
+       style="fill:#008000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path349"
+       cx="148.01231"
+       cy="89.27182"
+       rx="15.221612"
+       ry="14.97737" />
+    <circle
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path477"
+       cx="179.87642"
+       cy="44.355659"
+       r="13.997825" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect523"
+       width="96.883003"
+       height="27.461617"
+       x="26.144909"
+       y="32.005054" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.265;stroke-miterlimit:4;stroke-dasharray:none"
+       x="52.770065"
+       y="48.598515"
+       id="text6041"><tspan
+         sodipodi:role="line"
+         id="tspan6039"
+         style="fill:#000000;stroke-width:0.265;stroke-miterlimit:4;stroke-dasharray:none"
+         x="52.770065"
+         y="48.598515">Display</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="39.632984"
+       y="129.35254"
+       id="text16407"><tspan
+         sodipodi:role="line"
+         id="tspan16405"
+         style="stroke-width:0.264583"
+         x="39.632984"
+         y="129.35254">Bottone 1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="124.54505"
+       y="129.99707"
+       id="text19297"><tspan
+         sodipodi:role="line"
+         id="tspan19295"
+         style="stroke-width:0.264583"
+         x="124.54505"
+         y="129.99707">Bottone 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="88.844536"
+       y="12.11581"
+       id="text25387"><tspan
+         sodipodi:role="line"
+         id="tspan25385"
+         style="stroke-width:0.264583"
+         x="88.844536"
+         y="12.11581">Encoder e Bottone 3</tspan></text>
+    <circle
+       id="path28355"
+       style="fill:#000000;stroke:#000000;stroke-width:0.264583"
+       cx="64.464645"
+       cy="105.29645"
+       r="0.030955231" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 38.905314,119.17666 H 91.842097"
+       id="path28749" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 125.27391,119.24082 h 50.74614"
+       id="path28751" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 88.283464,13.697116 H 197.50547 l -17.2584,16.404564"
+       id="path28753" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 176.02005,119.24082 -27.91826,-15.1464"
+       id="path28755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 91.842097,119.17666 64.081847,105.33102"
+       id="path28757" />
+  </g>
+</svg>

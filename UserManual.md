@@ -2,11 +2,16 @@
 
 ![alt TiCo Front Panel](https://raw.githubusercontent.com/sejerpz/tico/main/docs/TiCo%20Front%20Panel.svg)
 
+## Navigazione
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Bottone 3|Click|Cambio modalità timer: Ingranditore, Sviluppo, Provinatore, Metronomo|
 ||Click lungo|Accesso alle impostazioni|
 
+## Segnali acustici
+
+In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnale acustico ogni 30 sec. ed uno differente ogni minuto.
 
 ## Modalità **Ingranditore**
 

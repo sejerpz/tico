@@ -11,7 +11,7 @@ Caratteristiche principali:
 * Flusso di lavoro configurabile (es. passaggio automatico da modalità ingranditore a sviluppo)
 * Statistiche sul numero di accensioni / tempo totale di funzionamento della lampada ingranditore
 
-![TiCo Leggi il manuale utente per conoscere tutti i dettagli](https://github.com/sejerpz/tico/blob/main/UserManual.md)
+![TiCO: manuale utente](https://github.com/sejerpz/tico/blob/main/UserManual.md)
 
 # Bill of Materials
 

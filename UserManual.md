@@ -72,6 +72,8 @@
 |Bottone 3|Click|Scorre i parametri delle impostazioni in sequenza|
 ||Click lungo|Salva ed esce dalla modalità impostazioni|
 
+## Parametri
+
 |Nome parametro|Descrizione parametro|Valore|Descrizione valore|
 |--------------|---------------------|------|------------------|
 |Pr. F-STOP|Provinatore F-STOP|Lin.|Lineare|

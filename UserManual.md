@@ -15,6 +15,10 @@ In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnal
 
 ## Modalità **Ingranditore**
 
+In questa modalità il timer è utilizzato per la stampa, attivando un ingranditore collegato all'uscita relé per il tempo di accensione specificato.
+
+E' possibile configurare TiCO in modo che al termine della stampa passi automaticamente nella modalità sviluppo dopo un tempo di pausa specificato o dopo la pressione del **Bottone 1** (vedere i parametri `Dopo SVILUPPO` e `T. PAUSA`)
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Display||**I.** `tempo di accensione ingranditore in sec.`
@@ -28,6 +32,17 @@ In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnal
 
 ## Modalità **Sviluppo Fattoriale**
 
+In questa modalità il timer è utilizzabile per lo sviluppo della carta nel classico processo a 3 bacinelle.
+
+La particolarità dello sviluppo fattoriale consiste in due momenti specifici durante il primo bagno di sviluppo:
+
+1. All'avvio il timer esegue un count up del tempo in attesa che l'immagine inizi a formarsi nella carta `tempo di comparsa`
+1. A questo punto l'operatore premendo il **Bottone 1** avvia la secondo fase dello sviluppo il cui tempo è determinato dal `tempo di comparsa` x `il fattore moltiplicativo` impostato.
+
+Ogni catena di sviluppo carta / developer ha un suo fattore moltiplicativo che deve essere determinato sperimentalmente dallo stampatore.
+
+Al termine dello sviluppo il timer passerà ai bagni successivi se abilitati nelle impostazioni (Arresto, Fissaggio 1, Fissaggio 2).
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Display||**F.** `fattore moltiplicatore`
@@ -40,6 +55,12 @@ In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnal
 
 ## Modalità **Sviluppo Lineare**
 
+In questa modalità il timer è utilizzabile per lo sviluppo della carta nel classico processo a 3 bacinelle.
+
+A differenza del metodo **fattoriale** questa modalità prevede un semplice timer count down dove sono impostati i secondi per il bagno di sviluppo.
+
+Al termine il timer passerà ai bagni successivi se abilitati nelle impostazioni (Arresto, Fissaggio 1, Fissaggio 2).
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Display||**S.** `tempo di sviluppo in sec.`
@@ -50,6 +71,16 @@ In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnal
 
 ## Modalità **Provinatore F-STOP**
 
+Il provinatore F-Stop serve a realizzare il provino scalare per determinare il tempo per ottenere una stampa di lavoro.
+
+La provinatura di solito avviene tramite l'ausilio di un provinatore locale provvisto di una finestrella oppure semplicemente facendo scorrere un cartoncino scuro coprendo il foglio che si sta stampando.
+
+Nel primo caso il tempo di attivazione dell'ingranditore per ogni striscia è determinato dal **tempo base** più il tempo relativo al nr di provino ed allo scostamento in STOP impostato (vedere parametro  `Pr. F-STOP`).
+
+Nel secondo caso il tempo e determinato come *delta* fra il tempo di esposizione della striscia precedente ed il **tempo base** più il tempo relativo al nr di provino ed allo scostamento in STOP impostato (vedere parametro  `Pr. F-STOP`).
+
+Il nr di strisce per ogni provino può essere preimpostato oppure determinato dinamicamente interrompendo la procedura semplicemente con la pressione del **Bottone 1**.
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Display||**P.** `tempo base per striscia provino in sec.`
@@ -59,6 +90,8 @@ In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnal
 |Bottone 2|Click|Focus **ON / OFF**|
 
 ## Modalità **Metronomo**
+
+In questa modalità il timer funziona come semplice metronomo emettendo da 1 a max 4 beep al secondo.
 
 ||Azione|Descrizione|
 |-------|------|--------|

@@ -2,7 +2,7 @@
 
 Timer per Camera Oscura
 
-Modalità di funzionamento:
+Caratteristiche principali:
 
 * Timer per ingranditore lineare o fattoriale
 * Provinatore lineare o F-STOP
@@ -10,6 +10,8 @@ Modalità di funzionamento:
 * Metronomo
 * Flusso di lavoro configurabile (es. passaggio automatico da modalità ingranditore a sviluppo)
 * Statistiche sul numero di accensioni / tempo totale di funzionamento della lampada ingranditore
+
+Manuale Utente:** ![alt TiCo User Manual](https://github.com/sejerpz/tico/blob/**main/UserManual.md)
 
 # Bill of Materials
 

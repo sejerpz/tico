@@ -71,9 +71,9 @@ Al termine il timer passerà ai bagni successivi se abilitati nelle impostazioni
 
 ## Modalità **Provinatore F-STOP**
 
-Il provinatore F-Stop serve a realizzare il provino scalare per determinare il tempo per ottenere una stampa di lavoro.
+Il provinatore F-Stop serve a realizzare il provino scalare e determinare il tempo per ottenere una stampa di lavoro.
 
-La provinatura di solito avviene tramite l'ausilio di un provinatore locale provvisto di una finestrella oppure semplicemente facendo scorrere un cartoncino scuro coprendo il foglio che si sta stampando.
+La provinatura di solito avviene tramite l'ausilio di un provinatore provvisto di una finestrella oppure semplicemente facendo scorrere un cartoncino scuro coprendo il foglio che si sta stampando.
 
 Nel primo caso il tempo di attivazione dell'ingranditore per ogni striscia è determinato dal **tempo base** più il tempo relativo al nr di provino ed allo scostamento in STOP impostato (vedere parametro  `Pr. F-STOP`).
 

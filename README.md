@@ -72,4 +72,4 @@ TiCO è sviluppato in c++ (arduino) utilizzando Visual Studio Code e PlatformIO
 
 * Aprire la cartella TiCO e fare il build della soluzione `CTRL+ALT+B`
 
-* Se non ci sono errori eseguire l'upload nell'arduino nano `CTRL+ALT+U
+* Se non ci sono errori eseguire l'upload nell'arduino nano `CTRL+ALT+U`

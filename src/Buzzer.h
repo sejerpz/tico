@@ -39,6 +39,7 @@ const unsigned int soundReset[] = { 5, 880, 500, 739, 500, 440, 150, 0, 100, 440
 const unsigned int soundMetronome[] = { 1, 440, 100 };
 const unsigned int soundHalfMinute[] = { 3, 440, 100, 0, 50, 440, 100 };
 const unsigned int soundMinute[] = { 1, 440, 500 };
+const unsigned int soundRelativeMinute[] = { 1, 880, 500 };
 const unsigned int soundStartListening[] = { 2, 220, 150, 440, 150 };
 const unsigned int soundStopListening[] = { 3, 440, 100, 220, 100, 110, 200 };
 

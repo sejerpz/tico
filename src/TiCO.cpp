@@ -1115,7 +1115,10 @@ void updateStatus(unsigned long currentMillis)
               break;
             default:
               if (tico.settings.timerMode != TimerModes::TestStrips) {
-                 if (countDown % 60000 < 50) {
+                if (tico.settings.timerMode == TimerModes::Devel && (elapsed % 60000) < 50) {
+                  // beep differenziato ogni minuto relativo all'inizio del count down ma solo in sviluppo
+                  tico.buzzer.sound = soundRelativeMinute;
+                } else if (countDown % 60000 < 50) {
                   // beep differenziato ogni minuto
                   tico.buzzer.sound = soundMinute;
                 } else if (countDown % 30000 < 50) {

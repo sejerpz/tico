@@ -743,9 +743,8 @@ void onTimerDisplayElapsed (Watch::Event *evt) {
       clearDisplay();
       return;
     } else {
-      number = tico.timerPausedStart - tico.timerStartValue;
+      number = evt->currentMillis - tico.timerPausedStart;
     }
-
   } else {
     number = evt->currentMillis - tico.timerStartValue;
   }

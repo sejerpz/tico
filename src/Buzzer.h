@@ -41,6 +41,7 @@ const unsigned int soundHalfMinute[] = { 3, 440, 100, 0, 50, 440, 100 };
 const unsigned int soundMinute[] = { 1, 440, 500 };
 const unsigned int soundStartListening[] = { 2, 220, 150, 440, 150 };
 const unsigned int soundStopListening[] = { 3, 440, 100, 220, 100, 110, 200 };
+const unsigned int soundFocusOff[] = { 1, 960, 100 };
 
 struct Buzzer {
   const unsigned int *sound = NULL;

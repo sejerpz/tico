@@ -125,9 +125,9 @@ const int rele1Pin = 13;
 #define MAX_TIMER_MODES 3 // l'utima modalita' (FactorialCalculator) non e' selezionabile
 
 enum TimerModes {
+  TestStrips,
   EnlargerTimer,
   Devel,
-  TestStrips,
   Metronome,
   FactorialCalculator
 };

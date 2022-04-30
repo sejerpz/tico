@@ -154,9 +154,13 @@ struct Tico {
         pause(currentMillis);
       } else if (settings.timerMode == TimerModes::TestStrips) {
         if (nextStep == PrintSteps::TestStripCountDown && settings.testStripCountDownTime > 0) {
-          currentPrintStep = nextStep;
-          timerInterval = settings.testStripCountDownTime;
-          inCountDown = true;
+          // il primo countdown in modalita' differenziale lo posso tranquillamente saltare
+          if (testStripCount != -1 || settings.testStripTimeCalc != PARAM_TESTSTRIP_TIMECALC_DELTA)
+          {
+            currentPrintStep = nextStep;
+            timerInterval = settings.testStripCountDownTime;
+            inCountDown = true;
+          }
         } else if (nextStep == PrintSteps::PrintingCountDown && settings.countDownTime > 0) {
           currentPrintStep = nextStep;
           timerInterval = settings.countDownTime;

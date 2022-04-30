@@ -93,6 +93,12 @@ struct Tico {
       }
     }
 
+    void stop()
+    {
+      timerState = TimerStates::Stopped;
+      buzzer.sound = soundEnd;
+    }
+
     void pause(unsigned long currentMillis) {
       timerPausedStart = currentMillis;
       buzzer.sound = soundPaused;
@@ -124,6 +130,7 @@ struct Tico {
 
       if (timerState == TimerStates::FocusOn) {
         timerState = TimerStates::Stopped;
+        buzzer.sound = soundFocusOff;
       } else {
         if ((settings.timerMode == TimerModes::EnlargerTimer || settings.timerMode == TimerModes::Metronome || settings.timerMode == TimerModes::TestStrips)
             && timerState == TimerStates::Stopped) {
@@ -497,7 +504,6 @@ void onTimerStatusChanged (Watch::Event *evt) {
       } else if (tico.timerState == TimerStates::Stopped) {
           tico.settings.timerMode = tico.timerStartMode;
           displayCurrentMode();
-          tico.buzzer.sound = soundEnd;
           tico.setRele(LOW, evt->currentMillis);
       } else if (tico.timerState == TimerStates::FocusOn) {
           tico.buzzer.sound = soundAck;
@@ -812,9 +818,9 @@ void onButton1Clicked (Watch::Event *evt) {
              && (tico.settings.timerMode == TimerModes::EnlargerTimer || tico.settings.timerMode == TimerModes::Metronome)
              && tico.timerState == TimerStates::Stopped) {
     // focus
-    tico.timerState = TimerStates::FocusOn;
+    tico.toggleFocus();
   } else if (btn->state == BTN_CLICK && tico.timerState == TimerStates::FocusOn) {
-    tico.timerState = TimerStates::Stopped;
+    tico.toggleFocus();
   } else {
     switch (tico.settings.timerMode)
     {
@@ -878,8 +884,7 @@ void onButton1Clicked (Watch::Event *evt) {
                 tico.timerStartValue = btn->currentMillis;
                 tico.buzzer.sound = soundStart;
               } else {
-                tico.timerState = TimerStates::Stopped;
-                tico.buzzer.sound = soundEnd;
+                tico.stop();
               }
             } else if (btn->state == BTN_LONG_CLICK) {
               tico.cancel();
@@ -893,8 +898,7 @@ void onButton1Clicked (Watch::Event *evt) {
           tico.timerStartValue = btn->currentMillis;
           tico.buzzer.sound = soundStart;
         } else if (tico.timerState == TimerStates::RunningUp) {
-          tico.timerState = TimerStates::Stopped;
-          tico.buzzer.sound = soundEnd;
+          tico.stop();
         }
         break;
     }

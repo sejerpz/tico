@@ -940,9 +940,9 @@ void onButtonFocusClicked (Watch::Event *evt) {
     if (tico.settings.timerMode == TimerModes::FactorialCalculator) {
       tico.settings.timerMode = TimerModes::TestStrips;
       displayTimerModeInfoMessage();
-    } else if (tico.settings.timerMode == TimerModes::Devel && (tico.timerState == TimerStates::RunningDown || tico.timerState == TimerStates::RunningUp)) {
-      // skip step
-      tico.skipCurrentStep = true;
+    } else if (tico.settings.timerMode == TimerModes::Devel && tico.timerState == TimerStates::RunningDown) {
+      tico.timerInterval += 10000;
+      tico.buzzer.sound = soundAck;                 
     } else {
       tico.toggleFocus();
     }
@@ -956,6 +956,9 @@ void onButtonFocusClicked (Watch::Event *evt) {
       tico.settings.printTime = tico.calculateCurrentStripTime() + tico.settings.testStripPreExpos;
       tico.settings.timerMode = TimerModes::EnlargerTimer;
       tico.buzzer.sound = soundAck;
+    } else if (tico.settings.timerMode == TimerModes::Devel && (tico.timerState == TimerStates::RunningDown || tico.timerState == TimerStates::RunningUp)) {
+      // skip step
+      tico.skipCurrentStep = true;
     }
   }
 }

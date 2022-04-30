@@ -739,7 +739,7 @@ void onTimerDisplayElapsed (Watch::Event *evt) {
   unsigned long number;
  
   if (tico.isPaused()) {
-    if (((evt->currentMillis - tico.timerPausedStart) / 1000) % 2 == 1) {
+    if (((evt->currentMillis - tico.timerPausedStart) / 500) % 2 == 1) {
       clearDisplay();
       return;
     } else {
@@ -747,11 +747,11 @@ void onTimerDisplayElapsed (Watch::Event *evt) {
     }
   } else {
     number = evt->currentMillis - tico.timerStartValue;
+    if (tico.timerState == RunningDown) {
+      number = tico.timerInterval - number;
+    }
   }
-
-  if (tico.timerState == RunningDown) {
-    number = tico.timerInterval - number;
-  }
+  
   displayInteger(number / 100, 2);
   if ((tico.timerState == RunningDown || tico.timerState == RunningUp) && ((number / 100) % 10 <= 1 || tico.isPaused())) {
     switch (tico.currentPrintStep) {

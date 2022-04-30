@@ -1117,16 +1117,31 @@ void updateStatus(unsigned long currentMillis)
               }
               break;
             default:
-              if (tico.settings.timerMode != TimerModes::TestStrips) {
-                 if (countDown % 60000 < 50) {
-                  // beep differenziato ogni minuto
-                  tico.buzzer.sound = soundMinute;
-                } else if (countDown % 30000 < 50) {
-                  // beep differenziato ogni 30 secondi
-                  tico.buzzer.sound = soundHalfMinute;
-                } else if (countDown % 1000 < 50) {
-                  // beep ad ogni secondo se stampo oppure negli ultimi 10 secondi di ogni bagno
-                  if (tico.currentPrintStep == PrintSteps::Printing || (countDown > 100 && countDown <= 10050)) {
+              if (tico.currentPrintStep == PrintSteps::Printing) {
+                // beep ad ogni secondo se stampo
+                if (countDown % 1000 < 50) {
+                  tico.buzzer.sound = soundMetronome;
+                }
+              } else if (tico.settings.timerMode != TimerModes::TestStrips) {
+                if (elapsed % 60000 < 50) {
+                  // beep differenziato ogni minuto relativo all'inizio del count down
+                  tico.buzzer.sound = soundRelativeMinute;
+                } else if (elapsed % 30000 < 50) {
+                  // beep differenziato ogni 30 secondi relativo all'inizio del count down
+                  tico.buzzer.sound = soundRelativeHalfMinute;
+                } else if (countDown < 60050) {
+                  // nell'ultimo minuto
+                  if (countDown % 60000 < 50) {
+                    // beep differenziato ogni minuto
+                    tico.buzzer.sound = soundMinute;
+                  } else if (countDown % 30000 < 50) {
+                    // beep differenziato ogni 30 secondi
+                    tico.buzzer.sound = soundHalfMinute;
+                  } else if (countDown % 15000 < 50 && (countDown > 14950 && countDown <= 15050)) {
+                    // beep avvertimento ai 15 secondi
+                    tico.buzzer.sound = sound15Sec;                  
+                  } else if ((countDown > 100 && countDown <= 10050) && (countDown % 1000) < 50) {
+                    // beep ad ogni secondo se stampo oppure negli ultimi 10 secondi di ogni bagno
                     tico.buzzer.sound = soundMetronome;
                   }
                 }

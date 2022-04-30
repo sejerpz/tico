@@ -1126,8 +1126,19 @@ void updateStatus(unsigned long currentMillis)
               break;
             default:
               if (tico.currentPrintStep == PrintSteps::Printing) {
-                // beep ad ogni secondo se stampo
-                if (countDown % 1000 < 50) {
+                if (tico.settings.timerMode == TimerModes::TestStrips && tico.settings.testStripCountDownTime == 0) {
+                  // se la pausa e' disattivata faccio il count down degli ultimi 3 secondi
+                  if (countDown > 550 && countDown  % 1000 < 50) {
+                    if (countDown <= 1050) {
+                      tico.buzzer.sound = soundLastTestStripSecond1;
+                    } else if (countDown <= 3050) {
+                      tico.buzzer.sound = soundMetronome;
+                    }
+                  } else if (countDown < 550 && countDown % 500 < 50) {
+                    tico.buzzer.sound = soundLastTestStripSecond2;
+                  }
+                } else if (countDown % 1000 < 50) {
+                  // beep ad ogni secondo se stampo
                   tico.buzzer.sound = soundMetronome;
                 }
               } else if (tico.settings.timerMode != TimerModes::TestStrips) {
@@ -1153,12 +1164,7 @@ void updateStatus(unsigned long currentMillis)
                     tico.buzzer.sound = soundMetronome;
                   }
                 }
-              } else if (tico.settings.testStripCountDownTime == 0) {
-                // se la pausa e' disattivata faccio il count down degli ultimi 5 secondi
-                if (countDown > 100 && countDown <= 5050 && countDown  % 1000 < 50) {
-                  tico.buzzer.sound = soundMetronome;
-                }
-              }
+              } 
             case PrintSteps::TestStripCountDown:
             break;
           }

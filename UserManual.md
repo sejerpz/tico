@@ -87,7 +87,19 @@ Il nr di strisce per ogni provino può essere preimpostato oppure determinato di
 |Encoder|Rotazione|Aumenta / diminuisce tempo base|
 |Bottone 1|Click|se timer fermo **avvia provinatura**|
 ||Click|se timer avviato **arresta la provinatura** (al termine del tempo)|
+|Bottone 1|Click lungo|se timer fermo cicla fra i parametri di quick edit: **tempo pre-esposizione**, **Provinatore F-STOP**|
 |Bottone 2|Click|Focus **ON / OFF**|
+|Bottone 2|Click lungo|Attiva modalità **Calcolatrice F-Stop**|
+
+## Modalità **Calcolatrice F-Stop**
+
+In questa modalità il timer visualizza i tempi di esposizione in base al tipo di provinatura (lineare o f-stop) e alla striscia selezionata
+||Azione|Descrizione|
+|-------|------|--------|
+|Display||**C.** `visualizza il tempo di esposizione della striscia corrente in sec.`
+|Encoder|Rotazione|Incrementa / decrementa la striscia corrente da 0 a ... |
+|Bottone 2|Click|Torna alla modalità **Provinatore F-STOP**|
+|Bottone 2|Click lungo|Imposta il tempo selezionato e attiva modalità **Ingranditore**|
 
 ## Modalità **Metronomo**
 
@@ -118,6 +130,8 @@ In questa modalità il timer funziona come semplice metronomo emettendo da 1 a m
 |||F. 1-1 ... F. 1-10|Incremento in stop del tempo per striscia provinata|
 |Pr. Nr|Numero di strisce per provino|Man.|Manuale (Bottone 1 per interrompere)|
 |||1 ... 20|Nr. di strice per provino (la provinatura si ferma automaticamente)|
+|Pr. PrESP|Tempo di pre-esposizione in secondi|OFF|Nessuna pre-esposizione|
+|||1 ... 32|Tempo in secondi|
 |Pr. t.Calc|Modalità di calcolo del tempo per striscia|Sing.|Singola (viene usato un provinatore localizzato con una finestrella)|
 |||Diff.|Come differenza dalla striscia precedente (la provinatura viene effettuata nascondendo progressivamente il foglio)|
 |Pr. Pausa|Tempo di pausa in sec. fra una striscia e l'altra|OFF|Nessuna pausa|

@@ -951,6 +951,11 @@ void onButtonFocusClicked (Watch::Event *evt) {
       tico.testStripCount = 0;
       tico.settings.timerMode = TimerModes::FactorialCalculator;
       displayTimerModeInfoMessage();
+    } else if (tico.settings.timerMode == TimerModes::FactorialCalculator) {
+      // goto print timer mode with selected time
+      tico.settings.printTime = tico.calculateCurrentStripTime() + tico.settings.testStripPreExpos;
+      tico.settings.timerMode = TimerModes::EnlargerTimer;
+      tico.buzzer.sound = soundAck;
     }
   }
 }

@@ -59,6 +59,7 @@ struct Tico {
 
   int testStripCount = 0;
   bool testStripDone = false;
+  byte testStripQuickEdit = 0; // quick edit parameters: 0 = base time, 1 = pre-exp, 2 = f-stops
 
   byte timerStep = 1;
 
@@ -196,6 +197,7 @@ struct Tico {
         }
       }
       timerStartValue = currentMillis;
+      testStripQuickEdit = 0; // reset to default parameter
       timerState = TimerStates::RunningDown;
     }
 
@@ -611,7 +613,19 @@ void onEncoderChanged (Watch::Event *evt) {
         }
         break;
       case TimerModes::TestStrips:
-        tico.settings.testStripBaseTime = min(PARAM_TIMER_TESTSTRIP_MAX, max(PARAM_TIMER_TESTSTRIP_MIN, tico.settings.testStripBaseTime + 1000 * direction));
+        switch (tico.testStripQuickEdit)
+        {
+          case 0:
+            tico.settings.testStripBaseTime = min(PARAM_TIMER_TESTSTRIP_MAX, max(PARAM_TIMER_TESTSTRIP_MIN, tico.settings.testStripBaseTime + 1000 * direction));
+            break;
+          case 1:
+            tico.settings.testStripPreExpos = min(PARAM_TESTSTRIP_PREEXPOS_MAX, max(PARAM_TESTSTRIP_PREEXPOS_MIN, tico.settings.testStripPreExpos + 1000 * direction));
+            break;
+          case 2:
+            tico.settings.testStripFStop = min(PARAM_TESTSTRIP_FSTOP_MAX, max(PARAM_TESTSTRIP_FSTOP_MIN, tico.settings.testStripFStop + direction));
+            break;
+        }
+        
         break;
       case TimerModes::FactorialCalculator:
         tico.testStripCount = min(99, max(0, tico.testStripCount + direction));
@@ -845,7 +859,16 @@ void onButton1Clicked (Watch::Event *evt) {
             tico.endTestStrip(btn->currentMillis);
           }
         } else if (btn->state == BTN_LONG_CLICK) {
-          if (tico.timerState != TimerStates::Stopped) {
+          if (tico.timerState == TimerStates::Stopped) {
+            // if timer is stopped quick edit secondary parameters
+            tico.testStripQuickEdit++;
+            if (tico.testStripQuickEdit == 3) {
+              tico.testStripQuickEdit = 0;
+            }
+            tico.buzzer.sound = soundAck;
+            displayCurrentMode();
+          } else {
+            // if timer is running then cancel
             tico.cancel();
           }
         }
@@ -1129,7 +1152,7 @@ void updateStatus(unsigned long currentMillis)
               break;
             default:
               if (tico.currentPrintStep == PrintSteps::Printing) {
-                if (tico.settings.timerMode == TimerModes::TestStrips && tico.settings.testStripCountDownTime == 0) {
+                if (tico.settings.timerMode == TimerModes::TestStrips && tico.settings.testStripCountDownTime == 0 && tico.testStripCount > -1) {
                   // se la pausa e' disattivata faccio il count down degli ultimi 3 secondi
                   if (countDown > 550 && countDown  % 1000 < 50) {
                     if (countDown <= 1050) {
@@ -1231,7 +1254,20 @@ void displayCurrentMode() {
       tico.displayBuff[0] = D_SEG_B | D_SEG_POINT;
       break;
     case TimerModes::TestStrips:
-      displayInteger(tico.settings.testStripBaseTime / 1000);
+      switch (tico.testStripQuickEdit)
+      {
+        case 0:
+          displayInteger(tico.settings.testStripBaseTime / 1000);
+          break;
+        case 1:
+          displayInteger(tico.settings.testStripPreExpos / 1000);
+          tico.displayBuff[1] = D_SEG_E;
+          break;
+        case 2:
+          displayInteger(tico.settings.testStripFStop);
+          tico.displayBuff[1] = D_SEG_F;
+          break;
+      }
       tico.displayBuff[0] = D_SEG_P | D_SEG_POINT;
       break;
     case TimerModes::FactorialCalculator:

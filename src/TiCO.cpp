@@ -828,12 +828,6 @@ void onButton1Clicked (Watch::Event *evt) {
   } else {
     switch (tico.settings.timerMode)
     {
-      case TimerModes::FactorialCalculator:
-        if (btn->state == BTN_CLICK) {
-          tico.settings.timerMode = TimerModes::TestStrips;
-          displayTimerModeInfoMessage();
-        }
-        break;
       case TimerModes::EnlargerTimer:
         if (btn->state == BTN_CLICK) {
           if (tico.timerState == TimerStates::Stopped) {
@@ -851,11 +845,7 @@ void onButton1Clicked (Watch::Event *evt) {
             tico.endTestStrip(btn->currentMillis);
           }
         } else if (btn->state == BTN_LONG_CLICK) {
-          if (btn->state == BTN_LONG_CLICK && tico.timerState == TimerStates::Stopped) {
-            tico.testStripCount = 0;
-            tico.settings.timerMode = TimerModes::FactorialCalculator;
-            displayTimerModeInfoMessage();
-          } else {
+          if (tico.timerState != TimerStates::Stopped) {
             tico.cancel();
           }
         }
@@ -947,11 +937,20 @@ void onButtonFocusClicked (Watch::Event *evt) {
   Watch::Button *btn = (Watch::Button *)evt;
  
   if (btn->state == BTN_CLICK) {
-    if (tico.settings.timerMode == TimerModes::Devel && (tico.timerState == TimerStates::RunningDown || tico.timerState == TimerStates::RunningUp)) {
+    if (tico.settings.timerMode == TimerModes::FactorialCalculator) {
+      tico.settings.timerMode = TimerModes::TestStrips;
+      displayTimerModeInfoMessage();
+    } else if (tico.settings.timerMode == TimerModes::Devel && (tico.timerState == TimerStates::RunningDown || tico.timerState == TimerStates::RunningUp)) {
       // skip step
       tico.skipCurrentStep = true;
     } else {
       tico.toggleFocus();
+    }
+  } else if (btn->state == BTN_LONG_CLICK) {
+    if (tico.settings.timerMode == TimerModes::TestStrips) {
+      tico.testStripCount = 0;
+      tico.settings.timerMode = TimerModes::FactorialCalculator;
+      displayTimerModeInfoMessage();
     }
   }
 }

@@ -1272,7 +1272,7 @@ void displayCurrentMode() {
       break;
     case TimerModes::FactorialCalculator:
       displayInteger((tico.settings.testStripPreExpos + tico.calculateCurrentStripTime()) / 100, 2);
-      tico.displayBuff[0] = D_SEG_F | D_SEG_POINT;
+      tico.displayBuff[0] = D_SEG_C | D_SEG_POINT;
       break;
   }
 }
@@ -1486,7 +1486,7 @@ void displayCurrentParDes() {
 }
 
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
 
   pinMode(encoderPin1, INPUT_PULLUP);
   pinMode(encoderPin2, INPUT_PULLUP);
@@ -1514,7 +1514,7 @@ void setup() {
 
   Watch::setup(ctx, millis());
   tico.buzzer.sound = soundWelcome;
-  Serial.println("TiCO is ready");
+  //Serial.println("TiCO is ready");
 }
 
 

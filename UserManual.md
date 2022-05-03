@@ -88,7 +88,7 @@ Il nr di strisce per ogni provino può essere preimpostato oppure determinato di
 |Encoder|Rotazione|Aumenta / diminuisce tempo base|
 |Bottone 1|Click|se timer fermo **avvia provinatura**|
 ||Click|se timer avviato **arresta la provinatura** (al termine del tempo)|
-|Bottone 1|Click lungo|se timer fermo cicla fra i parametri di quick edit: **tempo pre-esposizione**, **Provinatore F-STOP**|
+||Click lungo|se timer fermo cicla fra i parametri di quick edit: **tempo pre-esposizione**, **Provinatore F-STOP**|
 |Bottone 2|Click|Focus **ON / OFF**|
 |Bottone 2|Click lungo|Attiva modalità **Calcolatrice F-Stop**|
 

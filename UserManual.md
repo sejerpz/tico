@@ -6,12 +6,14 @@
 
 ||Azione|Descrizione|
 |-------|------|--------|
-|Bottone 3|Click|Cambio modalità timer: Ingranditore, Sviluppo, Provinatore, Metronomo|
+|Bottone 3|Click|Cambio modalità timer: Provinatore, Ingranditore, Sviluppo, Metronomo|
 ||Click lungo|Accesso alle impostazioni|
 
 ## Segnali acustici
 
 In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnale acustico ogni 30 sec. ed uno differente ogni minuto.
+
+Per lo sviluppo un segnale acustico avverte che si sta entrando nell'ultimo minuto, poi negli ultimi 30, 15 secondi fino al conto alla rovescia ogni secondo a partire dai 10.
 
 ## Modalità **Ingranditore**
 
@@ -93,7 +95,8 @@ Il nr di strisce per ogni provino può essere preimpostato oppure determinato di
 
 ## Modalità **Calcolatrice F-Stop**
 
-In questa modalità il timer visualizza i tempi di esposizione in base al tipo di provinatura (lineare o f-stop) e alla striscia selezionata
+In questa modalità il timer visualizza i tempi di esposizione in base al tipo di provinatura (lineare o f-stop) e alla striscia selezionata tramite l'encoder.
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Display||**C.** `visualizza il tempo di esposizione della striscia corrente in sec.`

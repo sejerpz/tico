@@ -28,7 +28,6 @@ E' possibile configurare TiCO in modo che al termine della stampa passi automati
 |Bottone 1|Click|se timer fermo **avvia countdown**|
 ||Click|se timer avviato in countdown **pause / resume**|
 ||Click lungo|se timer avviato in countdown **cancel**|
-|||se timer fermo **Focus ON**|
 |Bottone 2|Click|Focus **ON / OFF**|
 
 

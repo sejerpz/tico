@@ -38,9 +38,9 @@ In questa modalità il timer è utilizzabile per lo sviluppo della carta nel cla
 La particolarità dello sviluppo fattoriale consiste in due momenti specifici durante il primo bagno di sviluppo:
 
 1. All'avvio il timer esegue un count up del tempo in attesa che l'immagine inizi a formarsi nella carta `tempo di comparsa`
-1. A questo punto l'operatore premendo il **Bottone 1** avvia la secondo fase dello sviluppo il cui tempo è determinato dal `tempo di comparsa` x `il fattore moltiplicativo` impostato.
+1. A questo punto l'operatore premendo il **Bottone 1** avvia la seconda fase dello sviluppo il cui tempo è determinato dal `tempo di comparsa` x `il fattore moltiplicativo` impostato.
 
-Ogni catena di sviluppo carta / developer ha un suo fattore moltiplicativo che deve essere determinato sperimentalmente dallo stampatore.
+Ogni catena di sviluppo carta / sviluppo ha un suo fattore moltiplicativo che deve essere determinato sperimentalmente dallo stampatore.
 
 Al termine dello sviluppo il timer passerà ai bagni successivi se abilitati nelle impostazioni (Arresto, Fissaggio 1, Fissaggio 2).
 

@@ -47,7 +47,7 @@ struct Tico {
   unsigned long timerStartValue = 0;
   unsigned long timerLastChange = 0;
   unsigned long timerPausedStart = 0;
-
+  int timerFStopStep = 0;
   unsigned long releOnStart = 0;
 
   long timerAdd = 1000;
@@ -59,7 +59,7 @@ struct Tico {
 
   int testStripCount = 0;
   bool testStripDone = false;
-  byte testStripQuickEdit = 0; // quick edit parameters: 0 = base time, 1 = pre-exp, 2 = f-stops
+  byte quickEditParameters = 0; // quick edit parameters: 0 = base time, 1 = pre-exp, 2 = f-stops
 
   byte timerStep = 1;
 
@@ -72,6 +72,8 @@ struct Tico {
   bool isMessageInfoVisible = false;
 
   public:
+    
+
     void startPrint(unsigned long currentMillis) {
       settings.timerMode = TimerModes::EnlargerTimer;
       currentPrintStep = PrintSteps::Printing;
@@ -188,7 +190,7 @@ struct Tico {
         if (settings.testStripFStop > 0) {
           // fstop
           if (settings.testStripTimeCalc == PARAM_TESTSTRIP_TIMECALC_SINGLE)
-            timerInterval = calculateCurrentStripTime();
+            timerInterval = calculateFStopTime(settings.printFStopBaseTime, settings.printFStop, testStripCount);
           else
             timerInterval = calculateCurrentStripDeltaTime();
         } else {
@@ -197,7 +199,7 @@ struct Tico {
         }
       }
       timerStartValue = currentMillis;
-      testStripQuickEdit = 0; // reset to default parameter
+      quickEditParameters = 0; // reset to default parameter
       timerState = TimerStates::RunningDown;
     }
 
@@ -207,7 +209,7 @@ struct Tico {
       if (settings.testStripFStop > 0) {
           // fstop
           if (settings.testStripTimeCalc == PARAM_TESTSTRIP_TIMECALC_SINGLE)
-            timerInterval = calculateCurrentStripTime();
+            timerInterval = calculateFStopTime(settings.printFStopBaseTime, settings.printFStop, testStripCount);
           else
             timerInterval = calculateCurrentStripDeltaTime();
       } else {
@@ -235,8 +237,11 @@ struct Tico {
     // da https://www.analogica.it/post204604.html#p204604
     // base time × 2 ^ (step * fstopStep)
     // se ci fossero problemi di spazio sostuire pow con tabella lookup precalcolata
-    unsigned long calculateCurrentStripTime() {
-      unsigned long time = ((((double)settings.testStripBaseTime / 1000.0) * pow(2, (1.0 / settings.testStripFStop) * testStripCount)) + 0.005) * 1000;
+    // baseTime: tempo base
+    // fStopScale: scala in fstop (es. 1/10 di stop)
+    // currentFStop: fstop corrente per il quale eseguire il calcolo
+    unsigned long calculateFStopTime(int baseTime, int fStopScale, int currentFStop) {
+      unsigned long time = ((((double)baseTime / 1000.0) * pow(2, (1.0 / fStopScale) * currentFStop)) + 0.005) * 1000;
 
       return time;
     }
@@ -246,15 +251,18 @@ struct Tico {
       unsigned long prevStepTime = 0;
       
       if (testStripCount > 0)
-        prevStepTime = ((((double)settings.testStripBaseTime / 1000.0) * pow(2, (1.0 / settings.testStripFStop) * (testStripCount - 1))) + 0.005) * 1000;
+        prevStepTime = calculateFStopTime(settings.testStripBaseTime, settings.testStripFStop, testStripCount - 1);
    
-      return calculateCurrentStripTime() - prevStepTime;
+      return calculateFStopTime(settings.testStripBaseTime, settings.testStripFStop, testStripCount) - prevStepTime;
     }
 
     // reset settings to default values
     void resetSettings() {
       settings.timerMode = TimerModes::EnlargerTimer;
       settings.printTime = PARAM_TIMER_ENLARGER_DEFAULT;
+      settings.printMode = PARAM_TIMER_ENLARGER_MODE_DEFAULT;
+      settings.printFStop = PARAM_TIMER_ENLARGER_FSTOP_DEFAULT;
+      settings.printFStopBaseTime = 0;
       settings.develMode = DevelMode::Factorial;
       settings.develTime = PARAM_TIMER_DEVEL_DEFAULT;
       settings.stopTime = PARAM_TIMER_STOP_DEFAULT;
@@ -288,6 +296,20 @@ struct Tico {
           settings.develMode = TIMER_DEVEL_MODE_DEFAULT;
 
       settings.printTime = settings.printTime >= PARAM_TIMER_ENLARGER_MIN && settings.printTime <= PARAM_TIMER_ENLARGER_MAX ? settings.printTime : PARAM_TIMER_ENLARGER_DEFAULT;
+      settings.printFStopBaseTime = settings.printFStopBaseTime >= PARAM_TIMER_ENLARGER_MIN && settings.printFStopBaseTime <= PARAM_TIMER_ENLARGER_MAX ? settings.printFStopBaseTime : PARAM_TIMER_ENLARGER_DEFAULT;
+      switch (settings.printMode)
+      {
+        case PrintMode::Time:
+          break;
+        case PrintMode::FStop:
+          settings.printTime = 0;
+          timerFStopStep = 0;
+          break;
+        default:
+          settings.printMode = PARAM_TIMER_ENLARGER_MODE_DEFAULT;
+          break;
+      }
+      settings.printFStop = settings.printFStop >= PARAM_TIMER_ENLARGER_FSTOP_MIN && settings.printFStop <= PARAM_TIMER_ENLARGER_FSTOP_MAX ? settings.printFStop : PARAM_TIMER_ENLARGER_FSTOP_DEFAULT;
       settings.develTime = settings.develTime >= PARAM_TIMER_DEVEL_MIN && settings.develTime <= PARAM_TIMER_DEVEL_MAX ? settings.develTime : PARAM_TIMER_DEVEL_DEFAULT;
       settings.stopTime = settings.stopTime >= PARAM_TIMER_STOP_MIN && settings.stopTime <= PARAM_TIMER_STOP_MAX ? settings.stopTime : PARAM_TIMER_STOP_DEFAULT;
       settings.fix1Time = settings.fix1Time >= PARAM_TIMER_FIX_MIN && settings.fix1Time <= PARAM_TIMER_FIX_MAX ? settings.fix1Time : PARAM_TIMER_FIX1_DEFAULT;
@@ -350,6 +372,7 @@ void onCurrentParChanged (Watch::Event *evt);
 void onCurrentPrintStepChanged (Watch::Event *evt);
 void displayCurrentMode ();
 void displayCurrentParDes ();
+void displayParValue (uint8_t par);
 void displayCurrentParValue ();
 void clearDisplay ();
 
@@ -613,7 +636,7 @@ void onEncoderChanged (Watch::Event *evt) {
         }
         break;
       case TimerModes::TestStrips:
-        switch (tico.testStripQuickEdit)
+        switch (tico.quickEditParameters)
         {
           case 0:
             tico.settings.testStripBaseTime = min(PARAM_TIMER_TESTSTRIP_MAX, max(PARAM_TIMER_TESTSTRIP_MIN, tico.settings.testStripBaseTime + 1000 * direction));
@@ -632,19 +655,51 @@ void onEncoderChanged (Watch::Event *evt) {
         displayCurrentMode(); // aggiorno il display dato che non avviene automaticamente come per i settings
         break;
       case TimerModes::EnlargerTimer:
-        newValue = ((long)tico.settings.printTime + direction * tico.timerAdd);
+        switch (tico.quickEditParameters)
+        {
+          case 0: // time parameter
+            if (tico.settings.printMode == PrintMode::Time) {
+              newValue = ((long)tico.settings.printTime + direction * tico.timerAdd);
 
-        if (tico.settings.printTime >= FIX_THRESHOLD / 2 && newValue < FIX_THRESHOLD / 2) {
-          tico.settings.printTime = FIX_THRESHOLD / 2 - 100; // se passo dalla soglia di regolazione dei secondi ai 1/100 di secondo parto dal valore massimo - 100ms
-        } else if (tico.settings.printTime < FIX_THRESHOLD / 2 && newValue > FIX_THRESHOLD / 2) {
-          tico.settings.printTime = FIX_THRESHOLD / 2; // se passo dalla soglia di regolazione dei 1/100s ai secondi riparto dalla soglia
-        } else if (tico.settings.printTime >= FIX_THRESHOLD && newValue < FIX_THRESHOLD) {
-          tico.settings.printTime = FIX_THRESHOLD - 500; // se passo dalla soglia di regolazione dei secondi ai 1/100 di secondo parto dal valore massimo - 100ms
-        } else if (tico.settings.printTime < FIX_THRESHOLD && newValue > FIX_THRESHOLD) {
-          tico.settings.printTime = FIX_THRESHOLD; // se passo dalla soglia di regolazione dei 1/100s ai secondi riparto dalla soglia
-        } else {
-          tico.settings.printTime = min(PARAM_TIMER_ENLARGER_MAX, max(PARAM_TIMER_ENLARGER_MIN, newValue));
+              if (tico.settings.printTime >= FIX_THRESHOLD / 2 && newValue < FIX_THRESHOLD / 2) {
+                tico.settings.printTime = FIX_THRESHOLD / 2 - 100; // se passo dalla soglia di regolazione dei secondi ai 1/100 di secondo parto dal valore massimo - 100ms
+              } else if (tico.settings.printTime < FIX_THRESHOLD / 2 && newValue > FIX_THRESHOLD / 2) {
+                tico.settings.printTime = FIX_THRESHOLD / 2; // se passo dalla soglia di regolazione dei 1/100s ai secondi riparto dalla soglia
+              } else if (tico.settings.printTime >= FIX_THRESHOLD && newValue < FIX_THRESHOLD) {
+                tico.settings.printTime = FIX_THRESHOLD - 500; // se passo dalla soglia di regolazione dei secondi ai 1/100 di secondo parto dal valore massimo - 100ms
+              } else if (tico.settings.printTime < FIX_THRESHOLD && newValue > FIX_THRESHOLD) {
+                tico.settings.printTime = FIX_THRESHOLD; // se passo dalla soglia di regolazione dei 1/100s ai secondi riparto dalla soglia
+              } else {
+                tico.settings.printTime = min(PARAM_TIMER_ENLARGER_MAX, max(PARAM_TIMER_ENLARGER_MIN, newValue));
+              }
+            } else {
+              tico.timerFStopStep = max(0, tico.timerFStopStep + direction);
+              tico.settings.printTime = tico.calculateFStopTime(tico.settings.printFStopBaseTime, tico.settings.printFStop, tico.timerFStopStep) - tico.settings.printFStopBaseTime;
+            }
+            break;
+          case 1: // print mode parameter
+            tico.timerAdd = 0; // reset when changing print mode
+            if (direction != 0) {
+              tico.settings.printMode = tico.settings.printMode == PrintMode::Time ? PrintMode::FStop : PrintMode::Time;
+              if (tico.settings.printMode == PrintMode::FStop) {
+                tico.settings.printFStopBaseTime = tico.settings.printTime;
+                tico.settings.printTime = 0;
+                tico.timerFStopStep = 0;
+              } else {
+                tico.settings.printTime = tico.settings.printFStopBaseTime;
+              }
+            }
+            break;
+          case 2: // f-stop parameter
+            tico.settings.printFStop = min(PARAM_TIMER_ENLARGER_FSTOP_MAX, max(PARAM_TIMER_ENLARGER_FSTOP_MIN, tico.settings.printFStop + direction));
+
+            if (tico.settings.printMode == PrintMode::FStop) {
+              tico.settings.printTime = 0;
+              tico.timerFStopStep = 0;
+            }
+            break;                
         }
+        
         break;
       case TimerModes::Metronome:
         tico.settings.bps = min(PARAM_BPM_MAX, max(PARAM_BPM_MIN, tico.settings.bps + direction));
@@ -672,12 +727,14 @@ void onEncoderChanged (Watch::Event *evt) {
       case PARAM_TESTSTRIP_CDOWN: 
         tico.settings.testStripCountDownTime = min(PARAM_TESTSTRIP_COUNTDOWN_MAX, max(PARAM_TESTSTRIP_COUNTDOWN_MIN, (long)tico.settings.testStripCountDownTime + direction * 1000));
         break;
+      /* These parameters now are in QuickEdit mode
       case PARAM_TESTSTRIP_FSTOP: 
         tico.settings.testStripFStop = min(PARAM_TESTSTRIP_FSTOP_MAX, max(PARAM_TESTSTRIP_FSTOP_MIN, (long)tico.settings.testStripFStop + direction));
         break;        
       case PARAM_TESTSTRIP_PRETIME: 
         tico.settings.testStripPreExpos = min(PARAM_TESTSTRIP_PREEXPOS_MAX, max(PARAM_TESTSTRIP_PREEXPOS_MIN, (long)tico.settings.testStripPreExpos + direction * 1000));
-        break;        
+        break;
+      */
       case PARAM_TESTSTRIP_MODE: 
         tico.settings.testStripTimeCalc = min(PARAM_TESTSTRIP_TIMECALC_MAX, max(PARAM_TESTSTRIP_TIMECALC_MIN, (long)tico.settings.testStripTimeCalc + direction));
         break;        
@@ -832,11 +889,6 @@ void onButton1Clicked (Watch::Event *evt) {
              && tico.settings.timerMode != TimerModes::TestStrips
              && tico.timerState == TimerStates::RunningDown) {
     tico.pause(evt->currentMillis);
-  } else if (btn->state == BTN_LONG_CLICK 
-             && (tico.settings.timerMode == TimerModes::EnlargerTimer || tico.settings.timerMode == TimerModes::Metronome)
-             && tico.timerState == TimerStates::Stopped) {
-    // focus
-    tico.toggleFocus();
   } else if (btn->state == BTN_CLICK && tico.timerState == TimerStates::FocusOn) {
     tico.toggleFocus();
   } else {
@@ -847,8 +899,18 @@ void onButton1Clicked (Watch::Event *evt) {
           if (tico.timerState == TimerStates::Stopped) {
             tico.startPrint(btn->currentMillis);
           }
-        } else if (btn->state == BTN_LONG_CLICK && tico.timerState != TimerStates::Stopped) {
-          tico.cancel();
+        } else if (btn->state == BTN_LONG_CLICK) {
+          if (tico.timerState == TimerStates::Stopped) {
+            // if timer is stopped quick edit secondary parameters
+            tico.quickEditParameters++;
+            if (tico.quickEditParameters == 3) {
+              tico.quickEditParameters = 0;
+            }
+            tico.buzzer.sound = soundAck;
+            displayCurrentMode();
+          } else {
+            tico.cancel();
+          }
         }
         break;
       case TimerModes::TestStrips:
@@ -861,9 +923,9 @@ void onButton1Clicked (Watch::Event *evt) {
         } else if (btn->state == BTN_LONG_CLICK) {
           if (tico.timerState == TimerStates::Stopped) {
             // if timer is stopped quick edit secondary parameters
-            tico.testStripQuickEdit++;
-            if (tico.testStripQuickEdit == 3) {
-              tico.testStripQuickEdit = 0;
+            tico.quickEditParameters++;
+            if (tico.quickEditParameters == 3) {
+              tico.quickEditParameters = 0;
             }
             tico.buzzer.sound = soundAck;
             displayCurrentMode();
@@ -918,6 +980,8 @@ void onButton1Clicked (Watch::Event *evt) {
           tico.stop();
         }
         break;
+      case TimerModes::FactorialCalculator:
+        break;
     }
   }
 }
@@ -931,6 +995,7 @@ void onButton2Clicked (Watch::Event *evt) {
       if (newMode > MAX_TIMER_MODES)
         newMode = 0;
       tico.settings.timerMode = (TimerModes)newMode;
+      tico.quickEditParameters = 0;
       tico.buzzer.sound = soundWelcome;
       displayTimerModeInfoMessage();
     } else if (btn->state == BTN_LONG_CLICK) {
@@ -976,7 +1041,7 @@ void onButtonFocusClicked (Watch::Event *evt) {
       displayTimerModeInfoMessage();
     } else if (tico.settings.timerMode == TimerModes::FactorialCalculator) {
       // goto print timer mode with selected time
-      tico.settings.printTime = tico.calculateCurrentStripTime() + tico.settings.testStripPreExpos;
+      tico.settings.printTime = tico.calculateFStopTime(tico.settings.printFStopBaseTime, tico.settings.printFStop, tico.testStripCount) + tico.settings.testStripPreExpos;
       tico.settings.timerMode = TimerModes::EnlargerTimer;
       tico.buzzer.sound = soundAck;
     } else if (tico.settings.timerMode == TimerModes::Devel && (tico.timerState == TimerStates::RunningDown || tico.timerState == TimerStates::RunningUp)) {
@@ -1244,10 +1309,22 @@ void displayCurrentMode() {
       }
       break;
     case TimerModes::EnlargerTimer:
-      if (tico.settings.printTime < FIX_THRESHOLD)
-        displayInteger(tico.settings.printTime / 100, 2);
-      else
-        displayInteger(tico.settings.printTime / 1000);
+     switch (tico.quickEditParameters)
+      {
+        case 0:
+          if (tico.settings.printTime < FIX_THRESHOLD)
+            displayInteger(tico.settings.printTime / 100, 2);
+          else
+            displayInteger(tico.settings.printTime / 1000);
+          break;
+        case 1:
+          displayParValue(PARAM_TIMER_ENLARGER_MODE);
+          break;
+        case 2:
+          displayParValue(PARAM_TIMER_ENLARGER_FSTOP);
+          break;
+      }
+     
       tico.displayBuff[0] = D_SEG_I | D_SEG_POINT;
       break;
     case TimerModes::Metronome:
@@ -1255,33 +1332,34 @@ void displayCurrentMode() {
       tico.displayBuff[0] = D_SEG_B | D_SEG_POINT;
       break;
     case TimerModes::TestStrips:
-      switch (tico.testStripQuickEdit)
+      switch (tico.quickEditParameters)
       {
         case 0:
           displayInteger(tico.settings.testStripBaseTime / 1000);
           break;
         case 1:
-          displayInteger(tico.settings.testStripPreExpos / 1000);
+          displayParValue(PARAM_TESTSTRIP_PRETIME);
           tico.displayBuff[1] = D_SEG_E;
           break;
         case 2:
-          displayInteger(tico.settings.testStripFStop);
+          displayParValue(PARAM_TESTSTRIP_FSTOP);
           tico.displayBuff[1] = D_SEG_F;
           break;
       }
       tico.displayBuff[0] = D_SEG_P | D_SEG_POINT;
       break;
     case TimerModes::FactorialCalculator:
-      displayInteger((tico.settings.testStripPreExpos + tico.calculateCurrentStripTime()) / 100, 2);
+      displayInteger((tico.settings.testStripPreExpos + tico.calculateFStopTime(tico.settings.printFStopBaseTime, tico.settings.printFStop, tico.testStripCount)) / 100, 2);
       tico.displayBuff[0] = D_SEG_C | D_SEG_POINT;
       break;
   }
 }
 
-void displayCurrentParValue() {
+
+void displayParValue(uint8_t par) {
   uint8_t *msg;
 
-  switch (tico.currentPar)
+  switch (par)
   {
     case PARAM_BRIGHTNESS:
       displayInteger(tico.settings.brightness);
@@ -1335,7 +1413,20 @@ void displayCurrentParValue() {
       break;  
     case PARAM_TESTSTRIP_PRETIME:
       displayTimeOrOff(tico.settings.testStripPreExpos);
-      break;      
+      break;
+    case PARAM_TIMER_ENLARGER_MODE:
+      tico.displayBuff[1] = D_SEG_M;
+      tico.displayBuff[2] = D_SEG_OFF;
+      if (tico.settings.printMode == PrintMode::Time) {
+        tico.displayBuff[3] = D_SEG_T;
+      } else {
+        tico.displayBuff[3] = D_SEG_F;
+      }
+      break;
+    case PARAM_TIMER_ENLARGER_FSTOP:
+      displayInteger(tico.settings.printFStop);
+      tico.displayBuff[1] = D_SEG_F;
+      break;          
     case PARAM_RESET:
       if (tico.reset == 1) {
         msg = msg_RESET_PARAMS;
@@ -1430,6 +1521,11 @@ void displayCurrentParValue() {
   }
 
   display->showMessage(tico.displayBuff, 4); // forzo refresh
+}
+
+
+void displayCurrentParValue() {
+  displayParValue(tico.currentPar);
 }
 
 void displayCurrentParDes() {

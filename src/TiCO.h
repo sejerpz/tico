@@ -40,6 +40,12 @@ const int rele1Pin = 13;
 #define PARAM_TIMER_ENLARGER_MIN 100
 #define PARAM_TIMER_ENLARGER_DEFAULT 30000
 #define PARAM_TIMER_ENLARGER_MAX 999000
+#define PARAM_TIMER_ENLARGER_MODE_MIN 0
+#define PARAM_TIMER_ENLARGER_MODE_DEFAULT (PrintMode::Time)
+#define PARAM_TIMER_ENLARGER_MODE_MAX 1
+#define PARAM_TIMER_ENLARGER_FSTOP_MIN 1
+#define PARAM_TIMER_ENLARGER_FSTOP_DEFAULT 3
+#define PARAM_TIMER_ENLARGER_FSTOP_MAX 10
 #define PARAM_TIMER_TESTSTRIP_MIN 1000
 #define PARAM_TIMER_TESTSTRIP_DEFAULT 2000
 #define PARAM_TIMER_TESTSTRIP_MAX 99000
@@ -93,23 +99,28 @@ const int rele1Pin = 13;
 #define PARAM_AFTER_PRINT_DEFAULT (TimerModes::EnlargerTimer)
 #define PARAM_AFTER_DEVEL_DEFAULT (TimerModes::Devel)
 
-#define PARAM_TESTSTRIP_FSTOP 0
-#define PARAM_TESTSTRIP_STRIPCOUNT 1
-#define PARAM_TESTSTRIP_PRETIME 2
-#define PARAM_TESTSTRIP_MODE 3
-#define PARAM_TESTSTRIP_CDOWN 4
-#define PARAM_AFTER_PRINT 5
-#define PARAM_DEVEL_MODE 6
-#define PARAM_TSTOP 7
-#define PARAM_TFIX1 8
-#define PARAM_TFIX2 9
-#define PARAM_AFTER_DEVEL 10
-#define PARAM_CDOWN 11
-#define PARAM_SOUND 12
-#define PARAM_BRIGHTNESS 13
-#define PARAM_STATISTICS 14
-#define PARAM_RESET 15
-#define PARAM_COUNT 16
+// setting parameters
+#define PARAM_TESTSTRIP_STRIPCOUNT 0
+#define PARAM_TESTSTRIP_MODE 1
+#define PARAM_TESTSTRIP_CDOWN 2
+#define PARAM_AFTER_PRINT 3
+#define PARAM_DEVEL_MODE 4
+#define PARAM_TSTOP 5
+#define PARAM_TFIX1 6
+#define PARAM_TFIX2 7
+#define PARAM_AFTER_DEVEL 8
+#define PARAM_CDOWN 9
+#define PARAM_SOUND 10
+#define PARAM_BRIGHTNESS 11
+#define PARAM_STATISTICS 12
+#define PARAM_RESET 13
+#define PARAM_COUNT 14
+
+// quick edit parameters
+#define PARAM_TESTSTRIP_PRETIME 100
+#define PARAM_TESTSTRIP_FSTOP 101
+#define PARAM_TIMER_ENLARGER_MODE 102
+#define PARAM_TIMER_ENLARGER_FSTOP 103
 
 #define TIMER_MODE_DEFAULT (TimerModes::TestStrips)
 #define TIMER_DEVEL_MODE_DEFAULT (DevelMode::Factorial)
@@ -131,6 +142,8 @@ enum TimerModes {
   Metronome,
   FactorialCalculator
 };
+
+
 
 enum TimerStates {
   Stopped,
@@ -164,6 +177,11 @@ enum VoiceControlMode {
   Disabled,
   StartTraining,
   Enabled,
+};
+
+enum PrintMode {
+  Time, // encoder: increment / decrement time in seconds or fractions
+  FStop   // encoder: increment / decrement time in f-stop fractions
 };
 
 enum DevelMode {

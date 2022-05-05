@@ -33,6 +33,12 @@ struct TicoSettings {
   DevelMode develMode = TIMER_DEVEL_MODE_DEFAULT;
   // Print time in milliseconds
   unsigned long printTime = PARAM_TIMER_ENLARGER_DEFAULT;
+  // Print base time for FStop mode in milliseconds
+  int printFStopBaseTime = PARAM_TIMER_ENLARGER_DEFAULT;
+  // Print encoder mode: linear / f-stop
+  PrintMode printMode = PARAM_TIMER_ENLARGER_MODE_DEFAULT;
+   // Print f-stop interval settings (fraction of stop)
+  int printFStop = PARAM_TIMER_ENLARGER_FSTOP_DEFAULT;
   // Devel time in milliseconds
   unsigned long develTime = PARAM_TIMER_DEVEL_DEFAULT;
   // Devel factorial multiplicator value

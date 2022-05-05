@@ -1410,7 +1410,7 @@ void displayParValue(uint8_t par) {
         displayMessage(msg_DIFF);
       break;  
     case PARAM_TESTSTRIP_PRETIME:
-      displayInteger(tico.settings.testStripPreExpos);
+      displayInteger(tico.settings.testStripPreExpos / 1000);
       break;
     case PARAM_TIMER_ENLARGER_MODE:
       tico.displayBuff[1] = D_SEG_M;

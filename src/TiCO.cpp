@@ -1043,6 +1043,7 @@ void onButtonFocusClicked (Watch::Event *evt) {
       // goto print timer mode with selected time
       tico.settings.printTime = tico.calculateFStopTime(tico.settings.printFStopBaseTime, tico.settings.printFStop, tico.testStripCount) + tico.settings.testStripPreExpos;
       tico.settings.timerMode = TimerModes::EnlargerTimer;
+      tico.settings.printMode = PrintMode::Time;
       tico.buzzer.sound = soundAck;
     } else if (tico.settings.timerMode == TimerModes::Devel && (tico.timerState == TimerStates::RunningDown || tico.timerState == TimerStates::RunningUp)) {
       // skip step
@@ -1381,16 +1382,13 @@ void displayParValue(uint8_t par) {
       break;
     case PARAM_TESTSTRIP_FSTOP:
       if (tico.settings.testStripFStop == 0) {
-        displayMessage(msg_LINEARE);
-      } else if (tico.settings.testStripFStop < 10) {
-        displayInteger(tico.settings.testStripFStop);
-        tico.displayBuff[0] = D_SEG_F | D_SEG_POINT;
-        tico.displayBuff[1] = D_SEG_1;
-        tico.displayBuff[2] = D_SEG_MINUS;
+        tico.displayBuff[2] = D_SEG_OFF;
+        tico.displayBuff[3] = D_SEG_L | D_SEG_POINT;
       } else {
         displayInteger(tico.settings.testStripFStop);
-        tico.displayBuff[0] = D_SEG_1;
-        tico.displayBuff[1] = D_SEG_MINUS;
+        if (tico.settings.testStripFStop < 10) {
+          tico.displayBuff[2] = D_SEG_MINUS;
+        } 
       }
       break;   
     case PARAM_TESTSTRIP_STRIPCOUNT:
@@ -1412,7 +1410,7 @@ void displayParValue(uint8_t par) {
         displayMessage(msg_DIFF);
       break;  
     case PARAM_TESTSTRIP_PRETIME:
-      displayTimeOrOff(tico.settings.testStripPreExpos);
+      displayInteger(tico.settings.testStripPreExpos);
       break;
     case PARAM_TIMER_ENLARGER_MODE:
       tico.displayBuff[1] = D_SEG_M;

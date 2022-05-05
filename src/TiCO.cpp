@@ -1152,6 +1152,7 @@ void updateStatus(unsigned long currentMillis)
               break;
             default:
               if (tico.currentPrintStep == PrintSteps::Printing) {
+                // test strip and printing
                 if (tico.settings.timerMode == TimerModes::TestStrips && tico.settings.testStripCountDownTime == 0 && tico.testStripCount > -1) {
                   // se la pausa e' disattivata faccio il count down degli ultimi 3 secondi
                   if (countDown > 550 && countDown  % 1000 < 50) {
@@ -1168,13 +1169,13 @@ void updateStatus(unsigned long currentMillis)
                   tico.buzzer.sound = soundMetronome;
                 }
               } else if (tico.settings.timerMode != TimerModes::TestStrips) {
-                if (elapsed % 60000 < 50) {
-                  // beep differenziato ogni minuto relativo all'inizio del count down
+                if (countDown > 60050 && elapsed % 60000 < 50) {
+                  // beep differenziato ogni minuto relativo all'inizio del count down solo se superiore al minuto
                   tico.buzzer.sound = soundRelativeMinute;
-                } else if (elapsed % 30000 < 50) {
-                  // beep differenziato ogni 30 secondi relativo all'inizio del count down
+                } else if (countDown > 60050 && elapsed % 30000 < 50) {
+                  // beep differenziato ogni 30 secondi relativo all'inizio del count down solo se superiore al minuto
                   tico.buzzer.sound = soundRelativeHalfMinute;
-                } else if (countDown < 60050) {
+                } else if (countDown <= 60050) {
                   // nell'ultimo minuto
                   if (countDown % 60000 < 50) {
                     // beep differenziato ogni minuto

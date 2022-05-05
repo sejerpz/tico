@@ -6,12 +6,14 @@
 
 ||Azione|Descrizione|
 |-------|------|--------|
-|Bottone 3|Click|Cambio modalità timer: Ingranditore, Sviluppo, Provinatore, Metronomo|
+|Bottone 3|Click|Cambio modalità timer: Provinatore, Ingranditore, Sviluppo, Metronomo|
 ||Click lungo|Accesso alle impostazioni|
 
 ## Segnali acustici
 
 In tutte le modalità lo scorrere di un timer è sempre evidenziato da un segnale acustico ogni 30 sec. ed uno differente ogni minuto.
+
+Per lo sviluppo un segnale acustico avverte che si sta entrando nell'ultimo minuto, poi negli ultimi 30, 15 secondi fino al conto alla rovescia ogni secondo a partire dai 10.
 
 ## Modalità **Ingranditore**
 
@@ -26,7 +28,6 @@ E' possibile configurare TiCO in modo che al termine della stampa passi automati
 |Bottone 1|Click|se timer fermo **avvia countdown**|
 ||Click|se timer avviato in countdown **pause / resume**|
 ||Click lungo|se timer avviato in countdown **cancel**|
-|||se timer fermo **Focus ON**|
 |Bottone 2|Click|Focus **ON / OFF**|
 
 
@@ -37,9 +38,9 @@ In questa modalità il timer è utilizzabile per lo sviluppo della carta nel cla
 La particolarità dello sviluppo fattoriale consiste in due momenti specifici durante il primo bagno di sviluppo:
 
 1. All'avvio il timer esegue un count up del tempo in attesa che l'immagine inizi a formarsi nella carta `tempo di comparsa`
-1. A questo punto l'operatore premendo il **Bottone 1** avvia la secondo fase dello sviluppo il cui tempo è determinato dal `tempo di comparsa` x `il fattore moltiplicativo` impostato.
+1. A questo punto l'operatore premendo il **Bottone 1** avvia la seconda fase dello sviluppo il cui tempo è determinato dal `tempo di comparsa` x `il fattore moltiplicativo` impostato.
 
-Ogni catena di sviluppo carta / developer ha un suo fattore moltiplicativo che deve essere determinato sperimentalmente dallo stampatore.
+Ogni catena di sviluppo carta / sviluppo ha un suo fattore moltiplicativo che deve essere determinato sperimentalmente dallo stampatore.
 
 Al termine dello sviluppo il timer passerà ai bagni successivi se abilitati nelle impostazioni (Arresto, Fissaggio 1, Fissaggio 2).
 
@@ -87,13 +88,14 @@ Il nr di strisce per ogni provino può essere preimpostato oppure determinato di
 |Encoder|Rotazione|Aumenta / diminuisce tempo base|
 |Bottone 1|Click|se timer fermo **avvia provinatura**|
 ||Click|se timer avviato **arresta la provinatura** (al termine del tempo)|
-|Bottone 1|Click lungo|se timer fermo cicla fra i parametri di quick edit: **tempo pre-esposizione**, **Provinatore F-STOP**|
+||Click lungo|se timer fermo cicla fra i parametri di quick edit: **tempo pre-esposizione**, **Provinatore F-STOP**|
 |Bottone 2|Click|Focus **ON / OFF**|
 |Bottone 2|Click lungo|Attiva modalità **Calcolatrice F-Stop**|
 
 ## Modalità **Calcolatrice F-Stop**
 
-In questa modalità il timer visualizza i tempi di esposizione in base al tipo di provinatura (lineare o f-stop) e alla striscia selezionata
+In questa modalità il timer visualizza i tempi di esposizione in base al tipo di provinatura (lineare o f-stop) e alla striscia selezionata tramite l'encoder.
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Display||**C.** `visualizza il tempo di esposizione della striscia corrente in sec.`

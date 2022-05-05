@@ -21,15 +21,27 @@ In questa modalità il timer è utilizzato per la stampa, attivando un ingrandit
 
 E' possibile configurare TiCO in modo che al termine della stampa passi automaticamente nella modalità sviluppo dopo un tempo di pausa specificato o dopo la pressione del **Bottone 1** (vedere i parametri `Dopo SVILUPPO` e `T. PAUSA`)
 
+In modalità F-Stop i tempi saranno impostati in base alla precisione degli step configurati e allo step corrente variabile con l'encoder.
+All'attivazione il tempo impostato sarà utilizzato come base per il calcolo del tempo di accensione in relazione allo step corrente.
+Questa funzione è utile per effettuare mascherature o bruciature ragionando in stop o frazioni di stop.
+
 ||Azione|Descrizione|
 |-------|------|--------|
 |Display||**I.** `tempo di accensione ingranditore in sec.`
-|Encoder|Rotazione|Aumenta / diminuisce tempo accensione ingranditore|
+|Encoder|Rotazione|Aumenta / diminuisce tempo accensione o step corrente in base alla modalità di impostazione tempi configurata|
 |Bottone 1|Click|se timer fermo **avvia countdown**|
 ||Click|se timer avviato in countdown **pause / resume**|
+||Click lungo|se timer fermo **cicla edit parametri veloci**|
 ||Click lungo|se timer avviato in countdown **cancel**|
 |Bottone 2|Click|Focus **ON / OFF**|
 
+Parametri veloci disponibili:
+
+|Nome parametro|Descrizione parametro|Valore|Descrizione valore|
+|--------------|---------------------|------|------------------|
+|M|Modalità di impostazione tempi|T|Tempo lineare|
+|          |                              |F|Fstop|
+|F|Scala F-STOP|F. 1-1 ... F. 1-10|Incremento in stop del tempo di stampa|
 
 ## Modalità **Sviluppo Fattoriale**
 
@@ -92,6 +104,15 @@ Il nr di strisce per ogni provino può essere preimpostato oppure determinato di
 |Bottone 2|Click|Focus **ON / OFF**|
 |Bottone 2|Click lungo|Attiva modalità **Calcolatrice F-Stop**|
 
+Parametri veloci disponibili:
+
+|Nome parametro|Descrizione parametro|Valore|Descrizione valore|
+|--------------|---------------------|------|------------------|
+|E|Tempo di pre-esposizione in secondi|0|Nessuna pre-esposizione|
+| |                                   |1 ... 32|Tempo in secondi|
+|F|Provinatore F-STOP|L|Lineare|
+|||F. 1-1 ... F. 1-10|Incremento in stop del tempo per striscia provinata|
+
 ## Modalità **Calcolatrice F-Stop**
 
 In questa modalità il timer visualizza i tempi di esposizione in base al tipo di provinatura (lineare o f-stop) e alla striscia selezionata tramite l'encoder.
@@ -128,12 +149,8 @@ In questa modalità il timer funziona come semplice metronomo emettendo da 1 a m
 
 |Nome parametro|Descrizione parametro|Valore|Descrizione valore|
 |--------------|---------------------|------|------------------|
-|Pr. F-STOP|Provinatore F-STOP|Lin.|Lineare|
-|||F. 1-1 ... F. 1-10|Incremento in stop del tempo per striscia provinata|
 |Pr. Nr|Numero di strisce per provino|Man.|Manuale (Bottone 1 per interrompere)|
 |||1 ... 20|Nr. di strice per provino (la provinatura si ferma automaticamente)|
-|Pr. PrESP|Tempo di pre-esposizione in secondi|OFF|Nessuna pre-esposizione|
-|||1 ... 32|Tempo in secondi|
 |Pr. t.Calc|Modalità di calcolo del tempo per striscia|Sing.|Singola (viene usato un provinatore localizzato con una finestrella)|
 |||Diff.|Come differenza dalla striscia precedente (la provinatura viene effettuata nascondendo progressivamente il foglio)|
 |Pr. Pausa|Tempo di pausa in sec. fra una striscia e l'altra|OFF|Nessuna pausa|
